@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ballon Game</title>
+  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
+  <style>
+
+*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+
+  #top, #bottom {
+    width: 740px;
+    padding: 20px 0 0 20px;
+    margin: auto;
+  }
+  #top {
+    height: 180px;
+  }
+  div > div {
+    text-align: center;
+    font-size: 50px;
+    border: 1px solid black;
+    line-height: 98px;
+    margin: 0 20px 20px 0;
+  }
+  #top > div {
+    float: left;
+    width: 100px;
+    border-radius:100%;
+    position:relative;
+  }
+  .hide {
+    top: -500px;
+  }
+  #bottom > div {
+    display: none;
+  }
+  #bottom > div.active {
+    display: block;
+  }
+
+  </style>
+</head>
+<body>
+
+<div id="top">
+  <div data-num="6">6</div>
+  <div data-num="5">5</div>
+  <div data-num="4">4</div>
+  <div data-num="3">3</div>
+  <div data-num="2">2</div>
+  <div data-num="1">1</div>
+</div>
+
+<div id="bottom">
+  <div data-num="1">1</div>
+  <div data-num="2">2</div>
+  <div data-num="3">3</div>
+  <div data-num="4">4</div>
+  <div data-num="5">5</div>
+  <div data-num="6">6</div>
+</div>
+
+
+<script>
+$(function() {
+
+  var $bottom = $('#bottom div'),
+      $top    = $('#top div');
+
+  // generate random numbers between 0 and Max without repeating
+  var skip = [];
+  function randonNum0toMax(max) {
+    do {
+       var numOK = true,
+           myNum = Math.floor( (Math.random() * (max + 1)) );
+       for ( var i in skip )
+           {
+           if ( myNum == skip[i] ) { numOK = false; break; }
+           }
+        }
+        while (numOK == false)
+    skip.push(myNum); // add myNum to skip so not repeated
+    return myNum;
+  }  // end randonNum0toMax ----------------------------------------------------
+
+
+  $bottom.eq(randonNum0toMax(5)).addClass('active'); // activate first item
+
+
+  // add click function to divs in #top
+  $top.click(function () {
+
+    var $active = $('.active'),
+        $this   = $(this);
+
+    if ( $this.data("num") == $active.data("num") )
+       { // correct item clicked
+       $active.removeClass('active');
+       // $this.addClass('hide');
+       $this.text('BANG!').css('font-size', '20px');
+
+       if (skip.length < 6)
+          { // not finished
+          $bottom.eq(randonNum0toMax(5)).addClass('active');
+          }
+          else
+          { // finished
+          $bottom.parent().append('<div class="active">Well done!</div>');
+          }
+       }
+  });  // end click ----------------------------------------------------
+
+}); // end js
+</script>
+
+</body>
+</html>

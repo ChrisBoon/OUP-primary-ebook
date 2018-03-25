@@ -1,0 +1,22 @@
+.maze {
+  top: 78px;
+  left: 98px;
+  transform: scale(1,1);
+  -ms-transform: scale(1,1); /* IE 9 */
+  -webkit-transform: scale(1,1); /* Safari and Chrome */
+  -webkit-transition: -webkit-transform 1s ease-in; /* Changed here */ 
+     -moz-transition: -moz-transform 1s ease-in;
+       -o-transition: -o-transform 1s ease-in;
+          transition: transform 1s ease-in;
+}
+.finish .maze {
+  transform: scale(0,0);
+  -ms-transform: scale(0,0); /* IE 9 */
+  -webkit-transform: scale(0,0); /* Safari and Chrome */
+}
+#mazeCanvas {
+  position: absolute;
+  top: 94px;
+  left: 78px;
+  z-index: 5;
+}

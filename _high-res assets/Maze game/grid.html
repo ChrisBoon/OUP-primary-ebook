@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>grid</title>
+
+
+<style>
+
+body {
+  margin: 0;
+}
+#myCanvas {
+  display: block;
+  margin: 100px auto;
+  }
+#output {
+  background-color: silver;
+  padding: 20px;
+}
+table {
+  margin: 0 auto;
+}
+td {
+    background-color: #fff;
+    width: 40px;
+    padding:4px;
+  }
+td:nth-child(2)  {
+  border-right: 10px solid silver;
+}
+
+
+</style>
+<script src="http://code.jquery.com/jquery-latest.min.js"
+        type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+
+// -----------------------------------------------------
+// variables  
+
+  var drag_X, drag_Y,
+      cell_X = 20;
+      cell_Y = 60;
+      theCell  =  {row: 0, col:1}
+      canvas   =  $('#myCanvas')[0],
+      ctx      =  canvas.getContext('2d'),
+      isDown   =  false;
+      map      =  new Image(),
+      map.src  =  'map.png',
+      grid     =  new Array(),
+      cellSize =  40,
+      exit_T   =   0,
+      exit_R   =  0,
+      exit_B   =  0,
+      exit_L   =  0,
+      cellRef  =  {row:1, col:0}
+
+// end variables
+
+// -----------------------------------------------------
+
+// grid creation
+
+grid.push([ [0,0,0,0], [0,1,1,0], [0,1,0,1], [0,1,0,1], [0,1,0,1], [0,1,0,1], [0,0,1,1], [1,0,1,0] ]);
+grid.push([ [0,1,0,0], [1,1,1,0], [0,1,0,1], [0,0,1,1], [0,1,1,0], [0,0,1,1], [1,0,1,0], [1,0,1,0] ]);
+grid.push([ [0,0,0,0], [1,0,1,0], [0,0,1,0], [1,1,0,0], [1,0,0,1], [1,0,1,0], [1,0,0,0], [1,0,1,0] ]);
+grid.push([ [0,0,0,0], [1,1,1,0], [1,1,0,1], [0,1,0,1], [0,0,1,1], [1,1,0,0], [0,1,0,1], [1,0,1,1] ]);
+grid.push([ [0,0,0,0], [1,1,0,0], [0,1,0,1], [0,1,0,1], [1,1,0,1], [0,0,0,1], [0,1,0,0], [1,0,0,1] ]);
+
+
+function cellExits() {
+  thisCell = grid[theCell.row][theCell.col];
+  exit_T  =  thisCell[0];
+  exit_R  =  thisCell[1];
+  exit_B  =  thisCell[2];
+  exit_L  =  thisCell[3];
+}
+
+
+var mySelColor = '#CC0000';
+var mySelWidth = 2;
+
+      ctx.strokeStyle = mySelColor;
+      ctx.lineWidth = mySelWidth;
+
+
+// load the exit info from the grid array
+cellExits();
+
+// end grid
+
+// -----------------------------------------------------
+
+// end grid
+
+  // make sure image has loaded before drawing it to canvas  
+  map.onload = function() {
+    ctx.drawImage(map, 40, 0);
+    ctx.fillStyle = '#eeeeee';
+    ctx.fillRect(0,40,cellSize,cellSize);                                                                                                                                    
+
+    // ctx.fillRect(cell_X,cell_Y,cellSize,cellSize);
+  }
+
+
+
+var pathStore = new Array();
+    pathStore.push( [cell_X, cell_Y] );
+
+
+function drawPath(pathStore, theWidth, theColor) {
+  ctx.drawImage(map, 40, 0);
+  ctx.fillStyle = '#eeeeee';
+  ctx.fillRect(0,40,cellSize,cellSize);
+
+  if ( (cell_X == 300) && (cell_Y == 20) )
+  {
+  clear(ctx);
+      ctx.fillStyle = 'red';
+      ctx.font = 'italic 30pt Calibri';
+      ctx.textAlign = 'center';
+      ctx.fillText('You have finished!', 161, 100);
+  }
+  else
+  {
+  if ( (cell_X == 260) && (cell_Y == 100) )
+     {
+     ctx.fillStyle = '#dddddd';
+     ctx.fillRect(42,2,237,38);
+     ctx.fillRect(242,40,38,80);
+     }
+
+  ctx.beginPath();
+  for (var i = 0; i < pathStore.length; i++) {
+    ctx.lineTo( pathStore[i][0], pathStore[i][1] );
+  };
+  ctx.lineWidth = theWidth;
+  ctx.strokeStyle = theColor;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc( ( (theCell.col * 40) + 20 ), ( (theCell.row * 40) + 20), 10, 0, 2 * Math.PI);
+  ctx.fillStyle = 'red';
+  ctx.fill();
+  }
+}  
+// -----------------------------------------------------
+
+
+function isInside(containerX, containerY, containerW, containerH, testX, testY) {
+  // All we have to do is make sure the Mouse X,Y fall in the area between
+  // the shape's X and (X + Height) and its Y and (Y + Height)
+  return  (containerX <= testX) && (containerX + containerW >= testX) &&
+          (containerY <= testY) && (containerY + containerH >= testY);
+}
+
+//wipes the canvas context
+function clear(c) {
+  c.clearRect(0, 0, 322, 202);
+}
+
+  $(canvas).mousedown(function(e) {
+    drag_X = e.pageX - $(this).offset().left;
+    drag_Y = e.pageY - $(this).offset().top;
+
+    if (isInside((cell_X - 20), (cell_Y - 20), cellSize, cellSize, drag_X, drag_Y)) {
+
+    // ctx.moveTo(cell_X, cell_Y);
+    isDown = true;
+    }
+
+  }).mouseup( function() {
+    isDown = false;
+  }).mousemove(function(e) {
+    if (isDown) {
+      drag_X = e.pageX - $(this).offset().left;
+      drag_Y = e.pageY - $(this).offset().top;
+
+
+      if ( exit_T == 1 && drag_Y < (cell_Y - 25) ) { cell_Y -= cellSize }
+      if ( exit_R == 1 && drag_X > (cell_X + 25) ) { cell_X += cellSize }
+      if ( exit_B == 1 && drag_Y > (cell_Y + 25) ) { cell_Y += cellSize }
+      if ( exit_L == 1 && drag_X < (cell_X - 25) ) { cell_X -= cellSize }
+
+
+      theCell.col = Math.floor((cell_X / cellSize));
+      theCell.row = Math.floor((cell_Y / cellSize));
+      $('#output').html('<table><tr><td>drag_X</td><td>' + drag_X + '</td><td>drag_Y</td><td>' + drag_Y + '</td></tr><tr><td>cell_X</td><td>' + cell_X +    '</td><td>cell_Y</td><td>' + cell_Y +    '</td></tr><tr><td>col</td><td>'      + theCell.col + '</td><td>row</td><td>'      + theCell.row + '</td></tr><tr><td>left</td><td>'      + exit_L + '</td><td>top</td><td>'      + exit_T + '</td></tr></table>');
+
+
+      // moved to new cell so store its co-ords so can draw path to it
+      if (pathStore[pathStore.length] != [cell_X, cell_Y]) {pathStore.push( [cell_X, cell_Y] ) }
+
+
+      // load exits for current cell
+      cellExits();
+
+      clear(ctx);
+      drawPath(pathStore, 4, 'green')
+   }
+  })    
+// end mouse drawing
+// -----------------------------------------------------
+
+
+}) ; //end jQuery
+</script>
+</head>
+
+<body>
+<canvas id='myCanvas' width='322' height='202'></canvas>
+<div id="output">
+  <table><tbody><tr><td>drag_X</td><td></td><td>drag_Y</td><td></td></tr><tr><td>cell_X</td><td></td><td>cell_Y</td><td></td></tr><tr><td>col</td><td></td><td>row</td><td></td></tr><tr><td>left</td><td></td><td>top</td><td></td></tr></tbody></table>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<div class="activity u7a6" data-activityunit="7" data-activitynumber="6">
+
+	<canvas id='mazeCanvas' width="704px" height="480px"></canvas>
+  <img class='maze' src="../img/activity/u7a6/maze.png" alt="">
+  <img class='stars' src="../img/activity/u7a6/stars.png" alt="">
+  <img class='star' src="../img/activity/u7a6/star.png" alt="">
+  <img class='astro' src="../img/activity/u7a6/astro.png" alt="">
+  <img class='mouse' src="../img/activity/u7a6/Mouse.png" alt="">
+
+  <script src="../js/activity-type/maze.js"/>
+
+  <style>
+  .activity-title { background-image: url(../img/activity/u7a6/u7a6-title.png) }
+
+  .u7a6.activity {
+  	background:  url('../img/activity/u7a6/maze-bg-fin.jpg') 0 0  no-repeat;
+  }
+  .u7a6 .stars, .u7a6 .astro, .u7a6 .mouse, .u7a6 .maze, .u7a6 .star {
+    position: absolute;
+    pointer-events:none;
+	}
+	.u7a6 .stars {
+    top: -40px;
+    right: -60px;
+    -webkit-transition: top 1s ease, right 1s ease;
+        -moz-transition: top 1s ease, right 1s ease;
+        -o-transition: top 1s ease, right 1s ease;
+        transition: top 1s ease, right 1s ease;
+  }
+  .u7a6.finish .stars {
+    top: 200px;
+    right: 250px;
+  }
+  .u7a6 .star {
+    position: absolute;
+    top: 170px;
+    right: 90px;
+    -webkit-transition: top 1s ease, right 1s ease;
+        -moz-transition: top 1s ease, right 1s ease;
+        -o-transition: top 1s ease, right 1s ease;
+        transition: top 1s ease, right 1s ease;
+    opacity: 0;
+  }
+  .u7a6.finish .star {
+    opacity: 1;
+    top: 380px;
+    right: 420px;
+  }
+  .u7a6 .astro {
+    bottom: 0;
+    left: 0;
+  }
+  .u7a6 .mouse {
+    top: 0;
+    left: 0;
+  }
+
+  </style>
+
+</div>

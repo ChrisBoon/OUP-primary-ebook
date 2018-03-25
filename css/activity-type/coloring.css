@@ -1,0 +1,28 @@
+#coloring-canvas{
+  position: absolute;
+}
+.canvas-placeholder{
+  display: block;
+}
+.colour-palette {
+  border: 6px solid #0092bb;
+  border-radius: 15px;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 22px;
+  left: -15px;
+  padding-left: 10px;
+  z-index: 3;
+}
+
+.colour-palette img {
+  width: 130px;
+  margin: 5px;
+}
+
+.colour-palette div.active-color {
+  margin-left: 50px;
+  margin-right: -50px;
+  position: relative;
+}
+/*assuming these are to be standard across all instances of this actvity type. If not they should be moved - to .kit file if specific to actvity - or to overall DRam.css if generic across multiple actiities (although sass may make that work better)*/

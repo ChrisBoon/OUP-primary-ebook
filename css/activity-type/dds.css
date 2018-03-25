@@ -1,0 +1,4 @@
+/*make drag item always be above other items on page*/
+.dds-drag.ui-draggable-dragging{
+  z-index:5;
+}

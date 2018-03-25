@@ -1,0 +1,73 @@
+<div class="activity u7a3" data-activityunit="7" data-activitynumber="3">
+
+  <div class="pan-activity-container">
+    <div class="pan-view-container">
+      <div class="pan-drag-container">
+        <div class="pan-drag-layer">
+          <div class="u7a3-pan-click pan-click"></div>
+        </div><!-- end pan-drag-layer -->
+      </div><!-- end pan-drag-container -->
+    </div><!-- end pan-view-container -->
+  </div><!-- end pan-activity-container -->
+
+  <script src="../js/activity-type/pan.js"/>
+
+  <style>
+    .activity-title {
+      background-image: url(../img/activity/u7a3/u7a3-title.png)
+    }
+    .u7a3 .pan-activity-container{
+      width:837px;
+      height: 621px;
+      position: relative;
+    }
+    .u7a3 .pan-activity-container:before{
+      content:" ";
+      display: block;
+      position: absolute;
+      top: 0;right: 0;bottom: 0;left: 0;
+      background: url(../img/activity/u7a3/u7a3-pan-overlay.png) no-repeat top left;
+      background-size: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .u7a3 .pan-view-container{
+      position: absolute;
+      top: 50px;
+      left: 155px;
+      width: 470px;
+      height: 506px;
+      background: rgba(0,0,0,0.3);
+      overflow:hidden;
+    }
+    .u7a3 .pan-drag-container{
+      position: absolute;
+    }
+    .u7a3 .pan-drag-layer{
+      width: 2000px;
+      height: 2000px;
+      position: absolute;
+      background: url(../img/activity/u7a3/u7a3-pan-drag-layer-bg.jpg) no-repeat top left;
+    }
+    .u7a3-pan-click{
+      position: absolute;
+      top: 840px;
+      left: 160px;
+      width: 233px;
+      height: 225px;
+      background: url(../img/activity/u7a3/u7a3-pan-click-bg.png) no-repeat top left;
+      transition: all 1.5s ease;
+      -webkit-transition: all 1.5s ease;
+      transition: rotate 0.5s ease-out;
+      -webkit-transition: -webkit-rotate 0.5s ease-out;
+    }
+    .u7a3-pan-click.selected{
+      /*background-position: bottom left;*/
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+      pointer-events: none;
+    }
+
+  </style>
+
+</div><!-- end activity -->
